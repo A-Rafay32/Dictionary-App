@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Dictionary App</string>
+    <string name="dictionary">Dictionary</string>
+    <string name="text_field">Search Here</string>
+    <string name="recent">Recent</string>
+    <string name="recent_words">Recent Words</string>
+    <string name="searched_words">Word</string>
+    <string name="phonetics">Phonetics</string>
+    <string name="definition_heading">DEFINITION</string>
+    <string name="num_of_definition">5</string>
+    <string name="definition">Definition</string>
+</resources>
