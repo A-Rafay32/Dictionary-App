@@ -2,6 +2,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.dictionaryapp.model.DictionaryModel
 import com.example.dictionaryapp.services.Api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -10,8 +11,9 @@ import retrofit2.Response
 class DictionaryViewModel : ViewModel() {
 
     // LiveData to hold the API response data
-    private val _dictionaryResponse = MutableLiveData<List<String>>()
-    val dictionaryResponse: LiveData<List<String>> = _dictionaryResponse
+    private val _dictionaryResponse = MutableLiveData<DictionaryModel>()
+    val dictionaryResponse: LiveData<DictionaryModel> = _dictionaryResponse
+
 
 
 
@@ -19,7 +21,7 @@ class DictionaryViewModel : ViewModel() {
     fun fetchDictionaryData(word: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response: Response<List<String>> = Api.retrofitServiceGson.getWordString(word).execute()
+                val response: Response<List<DictionaryModel>> = Api.retrofitServiceMoshi.getWordDictionary(word).execute()
 
                 if (response.isSuccessful) {
                     println(response.message())
@@ -29,8 +31,8 @@ class DictionaryViewModel : ViewModel() {
                     val body = response.body()
                     if (body != null) {
                         // Update the LiveData with the response data
-                        println(body)
-                        _dictionaryResponse.postValue(body as List<String>)
+                        println(body[0].toMap())
+//                        _dictionaryResponse.postValue(body)
                     }
                 }
                 println(response.message())

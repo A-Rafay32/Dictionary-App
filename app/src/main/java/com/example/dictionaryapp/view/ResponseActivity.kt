@@ -23,6 +23,7 @@ class ResponseActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DictionaryViewModel
     private lateinit var definitionRecyclerView: RecyclerView
+
     private lateinit var idDefinition: TextView
     private var definitionList: ArrayList<String> = arrayListOf( "hello" ,"hi" , "how are you")
     lateinit var definition : String
@@ -34,6 +35,13 @@ class ResponseActivity : AppCompatActivity() {
 
         val data = intent.getStringExtra("user_input")
         val word : String = data.toString()
+        val searchedWord : TextView = findViewById(R.id.id_searched_word)
+        val phonetic : TextView = findViewById(R.id.id_phonetics)
+
+
+        searchedWord.text = word
+
+
 
         viewModel = ViewModelProvider(this).get(DictionaryViewModel::class.java)
         viewModel.fetchDictionaryData(word)
@@ -44,13 +52,15 @@ class ResponseActivity : AppCompatActivity() {
         definitionRecyclerView.layoutManager = LinearLayoutManager(this
         )
         definitionRecyclerView.setHasFixedSize(true)
+        phonetic.text = viewModel.dictionaryResponse.value?.phonetic
 
 
         // Observe the LiveData and update the UI when data is available
         viewModel.dictionaryResponse.observe(this, { response ->
             if (response != null) {
+                phonetic.text = response.phonetic
                 definitionList.clear()
-                definitionList.addAll(response)
+//                definitionList.addAll(response[0].to)
                 println(definitionList)
 
                 definitionRecyclerView.adapter = DefinitionAdapter(definitionList)
