@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 import retrofit2.http.GET
@@ -40,6 +41,7 @@ private val retrofitScalar = Retrofit.Builder()
     .addConverterFactory(ScalarsConverterFactory.create())
     .baseUrl(BASE_URL).client(httpClient.addInterceptor(logging).build())
     .build()
+
 val retrofitGson = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .addConverterFactory(GsonConverterFactory.create()) // Add this line
@@ -77,6 +79,9 @@ object Api {
 
     val retrofitServiceScalar : ApiService by lazy {
         retrofitScalar.create(ApiService::class.java)}
+
+    val retrofitServiceGson : ApiService by lazy {
+        retrofitGson.create(ApiService::class.java)}
 }
 
 

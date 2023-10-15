@@ -19,7 +19,7 @@ class DictionaryViewModel : ViewModel() {
     fun fetchDictionaryData(word: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response: Response<List<String>> = Api.retrofitServiceScalar.getWordString(word).execute()
+                val response: Response<List<String>> = Api.retrofitServiceGson.getWordString(word).execute()
 
                 if (response.isSuccessful) {
                     println(response.message())

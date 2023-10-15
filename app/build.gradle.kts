@@ -59,6 +59,8 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    //Retrofit Gson Converter
+    implementation( "com.squareup.retrofit2:converter-gson:2.9.0")
     //Navigation
     implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation ("androidx.navigation:navigation-ui-ktx:2.5.3")
