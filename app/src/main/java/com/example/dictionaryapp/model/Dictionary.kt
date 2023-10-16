@@ -29,13 +29,24 @@ data class DictionaryModel(
 //}
 
 
+//data class MeaningModel(
+////    val partOfSpeech: String,
+//    val definitions: List<DefinitionModel>
+//) {
+//    fun toMap(): Map<String, Any> {
+//        return mapOf(
+////            "partOfSpeech" to partOfSpeech,
+//            "definitions" to definitions.map { it.toMap() }
+//        )
+//    }
+//}
 data class MeaningModel(
-    val partOfSpeech: String,
+//    val partOfSpeech: String,
     val definitions: List<DefinitionModel>
 ) {
     fun toMap(): Map<String, Any> {
         return mapOf(
-            "partOfSpeech" to partOfSpeech,
+//            "partOfSpeech" to partOfSpeech,
             "definitions" to definitions.map { it.toMap() }
         )
     }

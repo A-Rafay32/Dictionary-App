@@ -25,10 +25,26 @@ class ResponseActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DictionaryViewModel
     private lateinit var definitionRecyclerView: RecyclerView
-
     private lateinit var idDefinition: TextView
+    private lateinit var searchedWord: TextView
+    private lateinit var phonetic: TextView
+    private lateinit var definitionSize: TextView
+
     private var definitionList: ArrayList<String> = arrayListOf( "hello" ,"hi" , "how are you")
     lateinit var definition : String
+
+    fun initViews(){
+        // All Views
+         searchedWord = findViewById(R.id.id_searched_word)
+         phonetic  = findViewById(R.id.id_phonetics)
+         definitionSize  = findViewById(R.id.def_size)
+    }
+
+
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -37,10 +53,11 @@ class ResponseActivity : AppCompatActivity() {
 
         val data = intent.getStringExtra("user_input")
         val word : String = data.toString()
-        val searchedWord : TextView = findViewById(R.id.id_searched_word)
-        val phonetic : TextView = findViewById(R.id.id_phonetics)
 
+        initViews()
         searchedWord.text = word
+
+
 
         viewModel = ViewModelProvider(this).get(DictionaryViewModel::class.java)
         viewModel.fetchDictionaryData(word)
@@ -55,11 +72,15 @@ class ResponseActivity : AppCompatActivity() {
         viewModel.dictionaryResponse.observe(this, { response ->
             if (response != null) {
                 phonetic.text = response[0]?.phonetic
+                definitionSize.text = response[0]?.meanings?.get(0)?.definitions?.size.toString()
                 definitionList.clear()
-//                definitionList.addAll(response.meanings.)
+//                definitionList.addAll(response[0].meanings.)
                 println(definitionList)
 
-                definitionRecyclerView.adapter = DefinitionAdapter(definitionList)
+                definitionRecyclerView.adapter = response[0]?.meanings?.get(0)?.let {
+                    DefinitionAdapter(
+                        it.definitions)
+                }
             } else {
                 println("Empty Response")
             }
