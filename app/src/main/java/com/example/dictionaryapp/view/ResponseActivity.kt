@@ -58,7 +58,6 @@ class ResponseActivity : AppCompatActivity() {
         searchedWord.text = word
 
 
-
         viewModel = ViewModelProvider(this).get(DictionaryViewModel::class.java)
         viewModel.fetchDictionaryData(word)
 
@@ -94,8 +93,6 @@ class ResponseActivity : AppCompatActivity() {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 }
 

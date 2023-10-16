@@ -9,4 +9,6 @@
     <string name="definition_heading">DEFINITION</string>
     <string name="num_of_definition">5</string>
     <string name="definition">Definition</string>
+    <string name="synonyms">Synonyms</string>
+    <string name="antonyms">Antonyms</string>
 </resources>
