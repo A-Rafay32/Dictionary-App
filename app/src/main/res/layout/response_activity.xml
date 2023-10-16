@@ -13,9 +13,11 @@
         android:id="@+id/antonyms_RecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.714"
+        app:layout_constraintHorizontal_bias="0.687"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -24,6 +26,8 @@
         android:id="@+id/synonyms_RecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.21"
@@ -35,6 +39,7 @@
         android:id="@+id/antonyms_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
         android:text="@string/antonyms"
         android:textColor="#030303"
         android:textSize="17sp"
@@ -50,6 +55,7 @@
         android:id="@+id/synonyms_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
         android:text="@string/synonyms"
         android:textColor="#030303"
         android:textSize="17sp"
@@ -69,23 +75,25 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.424"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintVertical_bias="0.238" />
 
     <TextView
         android:id="@+id/id_searched_word"
-        android:layout_width="351dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/searched_words"
         android:textColor="#2F2E2E"
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <ImageButton
         android:id="@+id/backButton"
@@ -112,7 +120,7 @@
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186" />
+        app:layout_constraintVertical_bias="0.166" />
 
     <TextView
         android:id="@+id/id_definition_heading"
@@ -124,24 +132,25 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.257" />
+        app:layout_constraintVertical_bias="0.234" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/definition_recyclerView"
-        android:layout_width="347dp"
-        android:layout_height="wrap_content"
+        android:layout_width="342dp"
+        android:layout_height="280dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:paddingLeft="10dp"
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.352"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.448" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

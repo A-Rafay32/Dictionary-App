@@ -42,12 +42,16 @@ data class DictionaryModel(
 //}
 data class MeaningModel(
 //    val partOfSpeech: String,
-    val definitions: List<DefinitionModel>
-) {
+    val definitions: List<DefinitionModel>,
+    val synonyms : List<String>,
+    val antonyms : List<String>,
+ ) {
     fun toMap(): Map<String, Any> {
         return mapOf(
 //            "partOfSpeech" to partOfSpeech,
-            "definitions" to definitions.map { it.toMap() }
+            "definitions" to definitions.map { it.toMap() },
+            "synonyms" to synonyms,
+            "antonyms" to antonyms
         )
     }
 }

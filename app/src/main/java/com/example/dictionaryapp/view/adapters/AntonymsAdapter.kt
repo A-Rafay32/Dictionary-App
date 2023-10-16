@@ -13,7 +13,7 @@ import com.example.dictionaryapp.model.DefinitionModel
 class AntonymsAdapter(private val response : List<String>) : RecyclerView.Adapter<AntonymsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AntonymsHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.synonyms_view,parent , false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.antonyms_view,parent , false)
         return AntonymsHolder(itemView)
     }
 

@@ -19,12 +19,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionaryapp.R
 //import com.example.dictionaryapp.R.id.definition_recyclerView
 import com.example.dictionaryapp.model.DictionaryModel
+import com.example.dictionaryapp.view.adapters.AntonymsAdapter
 import com.example.dictionaryapp.view.adapters.DefinitionAdapter
+import com.example.dictionaryapp.view.adapters.SynonymsAdapter
 
 class ResponseActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DictionaryViewModel
     private lateinit var definitionRecyclerView: RecyclerView
+    private lateinit var synonymsRecyclerView: RecyclerView
+    private lateinit var antonymsRecyclerView: RecyclerView
+
     private lateinit var idDefinition: TextView
     private lateinit var searchedWord: TextView
     private lateinit var phonetic: TextView
@@ -38,6 +43,18 @@ class ResponseActivity : AppCompatActivity() {
          searchedWord = findViewById(R.id.id_searched_word)
          phonetic  = findViewById(R.id.id_phonetics)
          definitionSize  = findViewById(R.id.def_size)
+
+        definitionRecyclerView = findViewById(R.id.definition_recyclerView)
+        definitionRecyclerView.layoutManager = LinearLayoutManager(this)
+        definitionRecyclerView.setHasFixedSize(true)
+
+        synonymsRecyclerView = findViewById(R.id.synonyms_RecyclerView)
+        synonymsRecyclerView.layoutManager = LinearLayoutManager(this)
+        synonymsRecyclerView.setHasFixedSize(true)
+
+        antonymsRecyclerView = findViewById(R.id.antonyms_RecyclerView)
+        antonymsRecyclerView.layoutManager = LinearLayoutManager(this)
+        antonymsRecyclerView.setHasFixedSize(true)
     }
 
 
@@ -61,11 +78,9 @@ class ResponseActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(DictionaryViewModel::class.java)
         viewModel.fetchDictionaryData(word)
 
-        definitionRecyclerView = findViewById(R.id.definition_recyclerView)
-        definitionRecyclerView.layoutManager = LinearLayoutManager(this
-        )
-        definitionRecyclerView.setHasFixedSize(true)
-//        println(viewModel.dictionaryResponse.value)
+
+
+
 
         // Observe the LiveData and update the UI when data is available
         viewModel.dictionaryResponse.observe(this, { response ->
@@ -76,9 +91,14 @@ class ResponseActivity : AppCompatActivity() {
 //                definitionList.addAll(response[0].meanings.)
                 println(definitionList)
 
+                synonymsRecyclerView.adapter = response[0]?.meanings?.get(0)?.let { SynonymsAdapter(it?.synonyms as List<String>) }
+                antonymsRecyclerView.adapter = response[0]?.meanings?.get(0)?.let { AntonymsAdapter(it?.antonyms as List<String>) }
+
                 definitionRecyclerView.adapter = response[0]?.meanings?.get(0)?.let {
                     DefinitionAdapter(
                         it.definitions)
+
+
                 }
             } else {
                 println("Empty Response")
