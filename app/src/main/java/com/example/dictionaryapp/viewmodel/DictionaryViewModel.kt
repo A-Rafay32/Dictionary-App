@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
+
 class DictionaryViewModel : ViewModel() {
 
     // LiveData to hold the API response data
@@ -22,6 +23,8 @@ class DictionaryViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _loading.postValue(true)
+
+
                 val response: Response<List<DictionaryModel>> = Api.retrofitServiceMoshi.getWordDictionary(word).execute()
 
                 if (response.isSuccessful) {
@@ -35,16 +38,20 @@ class DictionaryViewModel : ViewModel() {
                         println(body[0].toMap())
                         _dictionaryResponse.postValue(body)
                     }
+                    _loading.postValue(false)
                 }
                 println(response.message())
                 println(response.body())
                 println(response.code())
                 println(response.raw())// Handle other cases like errors, etc.
             } catch (e: Exception) {
+
                 println(e.printStackTrace())
                 // Handle network errors
             }finally{_loading.postValue(false)}
 
+
         }
     }
 }
+

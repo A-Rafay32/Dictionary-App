@@ -9,6 +9,9 @@
     android:paddingEnd="20dp"
     android:paddingRight="20dp">
 
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/antonyms_RecyclerView"
         android:layout_width="wrap_content"
@@ -40,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="@string/antonyms"
+        android:text = ""
         android:textColor="#030303"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -56,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="@string/synonyms"
+        android:text = ""
         android:textColor="#030303"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -84,7 +87,7 @@
         android:id="@+id/id_searched_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/searched_words"
+        android:text = ""
         android:textColor="#2F2E2E"
         android:textSize="48sp"
         android:textStyle="bold"
@@ -112,7 +115,7 @@
         android:id="@+id/id_phonetics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/phonetics"
+        android:text = ""
         android:textColor="@color/blue"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -126,7 +129,7 @@
         android:id="@+id/id_definition_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/definition_heading"
+        android:text = ""
         android:textColor="#030303"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -152,5 +155,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.448" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

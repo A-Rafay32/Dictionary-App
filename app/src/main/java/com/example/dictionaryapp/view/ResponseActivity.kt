@@ -57,6 +57,14 @@ class ResponseActivity : AppCompatActivity() {
         antonymsRecyclerView.setHasFixedSize(true)
     }
 
+    fun updateUI(){
+        findViewById<TextView>(R.id.id_definition_heading).setText("DEFINITION")
+        findViewById<TextView>(R.id.synonyms_heading).setText("SYNONYMS")
+        findViewById<TextView>(R.id.antonyms_heading).setText("ANTONYMS")
+    }
+
+
+
 
 
 
@@ -72,38 +80,39 @@ class ResponseActivity : AppCompatActivity() {
         val word : String = data.toString()
 
         initViews()
-        searchedWord.text = word
+
 
 
         viewModel = ViewModelProvider(this).get(DictionaryViewModel::class.java)
-        viewModel.fetchDictionaryData(word)
 
 
+        viewModel.loading.observe(this) { isLoading ->
+            if (isLoading) {
 
-
-
-        // Observe the LiveData and update the UI when data is available
-        viewModel.dictionaryResponse.observe(this, { response ->
-            if (response != null) {
-                phonetic.text = response[0]?.phonetic
-                definitionSize.text = response[0]?.meanings?.get(0)?.definitions?.size.toString()
-                definitionList.clear()
-//                definitionList.addAll(response[0].meanings.)
-                println(definitionList)
-
-                synonymsRecyclerView.adapter = response[0]?.meanings?.get(0)?.let { SynonymsAdapter(it?.synonyms as List<String>) }
-                antonymsRecyclerView.adapter = response[0]?.meanings?.get(0)?.let { AntonymsAdapter(it?.antonyms as List<String>) }
-
-                definitionRecyclerView.adapter = response[0]?.meanings?.get(0)?.let {
-                    DefinitionAdapter(
-                        it.definitions)
-
-
-                }
             } else {
-                println("Empty Response")
+                // Observe the LiveData and update the UI when data is available
+                viewModel.dictionaryResponse.observe(this) { response ->
+                    if (response != null) {
+                        updateUI()
+                        searchedWord.text = word
+                        phonetic.text = response[0]?.phonetic
+                        definitionSize.text =
+                            response[0]?.meanings?.get(0)?.definitions?.size.toString()
+                        definitionList.clear()
+//                definitionList.addAll(response[0].meanings.)
+                        println(definitionList)
+                        synonymsRecyclerView.adapter = response[0]?.meanings?.get(0)
+                            ?.let { SynonymsAdapter(it?.synonyms as List<String>) }
+                        antonymsRecyclerView.adapter = response[0]?.meanings?.get(0)
+                            ?.let { AntonymsAdapter(it?.antonyms as List<String>) }
+
+                        definitionRecyclerView.adapter = response[0]?.meanings?.get(0)?.let {
+                            DefinitionAdapter(it.definitions)
+                        }
+                    } else { println("Empty Response")}
+                }
             }
-        })
+        }
 
         // Make the API call
         viewModel.fetchDictionaryData(word)
