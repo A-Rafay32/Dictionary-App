@@ -4,11 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.model.DefinitionModel
-import layout.RecentWordsHolder
 
 class DefinitionAdapter(private val response : List<DefinitionModel>) : RecyclerView.Adapter<DefinitionHolder>() {
 
@@ -18,8 +16,8 @@ class DefinitionAdapter(private val response : List<DefinitionModel>) : Recycler
     }
 
     override fun onBindViewHolder(holder: DefinitionHolder, position: Int) {
-        val currentItem = response[position].definition
-        holder.response.text = currentItem.toString()
+        holder.definition.text = response[position].definition
+        holder.definitionNum.text = (position + 1).toString()
     }
 
     override fun getItemCount(): Int {
@@ -27,5 +25,7 @@ class DefinitionAdapter(private val response : List<DefinitionModel>) : Recycler
     }
 }
 class DefinitionHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-    val response : TextView = itemView.findViewById(R.id.textView3)
+    val definition : TextView = itemView.findViewById(R.id.textView3)
+    val definitionNum : TextView = itemView.findViewById(R.id.definition_num)
+
 }
