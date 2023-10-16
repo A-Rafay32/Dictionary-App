@@ -1,7 +1,9 @@
 package com.example.dictionaryapp.view
 
 import DictionaryViewModel
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
@@ -38,29 +40,23 @@ class ResponseActivity : AppCompatActivity() {
         val searchedWord : TextView = findViewById(R.id.id_searched_word)
         val phonetic : TextView = findViewById(R.id.id_phonetics)
 
-
         searchedWord.text = word
-
-
 
         viewModel = ViewModelProvider(this).get(DictionaryViewModel::class.java)
         viewModel.fetchDictionaryData(word)
-
-
 
         definitionRecyclerView = findViewById(R.id.definition_recyclerView)
         definitionRecyclerView.layoutManager = LinearLayoutManager(this
         )
         definitionRecyclerView.setHasFixedSize(true)
-        phonetic.text = viewModel.dictionaryResponse.value?.phonetic
-
+//        println(viewModel.dictionaryResponse.value)
 
         // Observe the LiveData and update the UI when data is available
         viewModel.dictionaryResponse.observe(this, { response ->
             if (response != null) {
-                phonetic.text = response.phonetic
+                phonetic.text = response[0]?.phonetic
                 definitionList.clear()
-//                definitionList.addAll(response[0].to)
+//                definitionList.addAll(response.meanings.)
                 println(definitionList)
 
                 definitionRecyclerView.adapter = DefinitionAdapter(definitionList)
@@ -71,6 +67,14 @@ class ResponseActivity : AppCompatActivity() {
 
         // Make the API call
         viewModel.fetchDictionaryData(word)
+
+        val backButton : ImageButton = findViewById(R.id.backButton)
+        backButton.setOnClickListener{
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 }
 

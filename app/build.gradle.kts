@@ -7,6 +7,7 @@ android {
     namespace = "com.example.dictionaryapp"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.dictionaryapp"
         minSdk = 24
