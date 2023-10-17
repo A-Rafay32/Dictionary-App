@@ -98,9 +98,9 @@ class ResponseActivity : AppCompatActivity() {
 //                definitionList.addAll(response[0].meanings.)
                         println(definitionList)
                         synonymsRecyclerView.adapter = response[0]?.meanings?.get(0)
-                            ?.let { SynonymsAdapter(it?.synonyms as List<String>) }
+                            ?.let { SynonymsAdapter(it?.synonyms?.subList(0,7) as List<String>) }
                         antonymsRecyclerView.adapter = response[0]?.meanings?.get(0)
-                            ?.let { AntonymsAdapter(it?.antonyms as List<String>) }
+                                ?.let { AntonymsAdapter(it?.antonyms?.subList(0,7) as List<String>) }
 
                         definitionRecyclerView.adapter = response[0]?.meanings?.get(0)?.let {
                             DefinitionAdapter(it.definitions)
