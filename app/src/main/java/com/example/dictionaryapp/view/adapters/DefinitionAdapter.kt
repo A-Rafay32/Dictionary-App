@@ -19,7 +19,12 @@ class DefinitionAdapter(private val response : List<DefinitionModel>) : Recycler
         holder.definition.text = response[position].definition
         val num : String  = (position + 1).toString()
         holder.definitionNum.text = "$num ."
-        holder.example.text = response[position].example
+        if(response[position].example == null ){
+            holder.exampleHeading.text = ""
+            holder.example.text = ""
+        }else{
+        holder.exampleHeading.text = "example"
+        holder.example.text = response[position].example}
     }
 
     override fun getItemCount(): Int {
@@ -30,5 +35,6 @@ class DefinitionHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
     val definition : TextView = itemView.findViewById(R.id.textView3)
     val definitionNum : TextView = itemView.findViewById(R.id.definition_num)
     val example : TextView = itemView.findViewById(R.id.example)
+    val exampleHeading : TextView = itemView.findViewById(R.id.example_heading)
 
 }

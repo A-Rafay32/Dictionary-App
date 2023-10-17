@@ -37,6 +37,7 @@ class ResponseActivity : AppCompatActivity() {
     private lateinit var phonetic: TextView
     private lateinit var definitionSize: TextView
 
+
     private var definitionList: ArrayList<String> = arrayListOf( "hello" ,"hi" , "how are you")
 
 

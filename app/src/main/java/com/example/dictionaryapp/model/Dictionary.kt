@@ -58,13 +58,12 @@ data class MeaningModel(
 
 data class DefinitionModel(
     val definition: String,
-    val example: String
+    val example: String?
 ) {
-    fun toMap(): Map<String, String> {
+    fun toMap(): Map<String, String?> {
         return mapOf(
             "definition" to definition,
             "example" to example
-
         )
     }
 }
