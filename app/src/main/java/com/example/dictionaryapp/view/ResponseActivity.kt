@@ -3,7 +3,9 @@ package com.example.dictionaryapp.view
 import DictionaryViewModel
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
@@ -30,19 +32,20 @@ class ResponseActivity : AppCompatActivity() {
     private lateinit var synonymsRecyclerView: RecyclerView
     private lateinit var antonymsRecyclerView: RecyclerView
 
-    private lateinit var idDefinition: TextView
+    private lateinit var progressBar: ProgressBar
     private lateinit var searchedWord: TextView
     private lateinit var phonetic: TextView
     private lateinit var definitionSize: TextView
 
     private var definitionList: ArrayList<String> = arrayListOf( "hello" ,"hi" , "how are you")
-    lateinit var definition : String
+
 
     fun initViews(){
         // All Views
          searchedWord = findViewById(R.id.id_searched_word)
          phonetic  = findViewById(R.id.id_phonetics)
          definitionSize  = findViewById(R.id.def_size)
+        progressBar = findViewById(R.id.progressBar)
 
         definitionRecyclerView = findViewById(R.id.definition_recyclerView)
         definitionRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -63,14 +66,6 @@ class ResponseActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.antonyms_heading).setText("ANTONYMS")
     }
 
-
-
-
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -88,11 +83,12 @@ class ResponseActivity : AppCompatActivity() {
 
         viewModel.loading.observe(this) { isLoading ->
             if (isLoading) {
-
+                progressBar.visibility = View.VISIBLE
             } else {
                 // Observe the LiveData and update the UI when data is available
                 viewModel.dictionaryResponse.observe(this) { response ->
                     if (response != null) {
+                        progressBar.visibility = View.GONE
                         updateUI()
                         searchedWord.text = word
                         phonetic.text = response[0]?.phonetic

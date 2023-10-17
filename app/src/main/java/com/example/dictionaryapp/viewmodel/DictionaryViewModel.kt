@@ -24,7 +24,6 @@ class DictionaryViewModel : ViewModel() {
             try {
                 _loading.postValue(true)
 
-
                 val response: Response<List<DictionaryModel>> = Api.retrofitServiceMoshi.getWordDictionary(word).execute()
 
                 if (response.isSuccessful) {
