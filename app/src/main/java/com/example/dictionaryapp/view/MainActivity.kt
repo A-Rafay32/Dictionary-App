@@ -3,6 +3,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val editText: EditText = findViewById(R.id.id_TextField)
 
         val pref: SharedPreferences by lazy {
@@ -42,6 +44,16 @@ class MainActivity : AppCompatActivity() {
         // Load recentWordList from SharedPreferences
         recentWordList = ArrayList(pref.getStringSet(PREF_KEY, emptySet()))
         newRecyclerView.adapter = RecentWordAdapter(recentWordList)
+
+        findViewById<ImageButton>(R.id.deleteButton).setOnClickListener{
+            // Clear SharedPreferences or perform any other data update operation
+            prefEdit.clear()
+            prefEdit.commit()
+
+            // Update recycleView
+            recentWordList.clear()
+            newRecyclerView.adapter = RecentWordAdapter(recentWordList)
+        }
 
         editText.setOnEditorActionListener { _, actionId, event ->
 //            if (actionId == EditorInfo.IME_ACTION_DONE) {

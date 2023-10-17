@@ -8,25 +8,30 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-
+enum class ApiStatus { LOADING, ERROR, DONE }
 class DictionaryViewModel : ViewModel() {
 
     // LiveData to hold the API response data
     private val _dictionaryResponse = MutableLiveData<List<DictionaryModel?>>()
     val dictionaryResponse: MutableLiveData<List<DictionaryModel?>> = _dictionaryResponse
 
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> = _loading
+    // The internal MutableLiveData that stores the status of the most recent request
+    private val _status = MutableLiveData<ApiStatus>()
+    // The external immutable LiveData for the request status
+    val status: LiveData<ApiStatus> = _status
 
     // Function to make the API call and update the LiveData
     fun fetchDictionaryData(word: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _loading.postValue(true)
+                _status.postValue(ApiStatus.LOADING)
 
                 val response: Response<List<DictionaryModel>> = Api.retrofitServiceMoshi.getWordDictionary(word).execute()
 
                 if (response.isSuccessful) {
+
+                    _status.postValue(ApiStatus.DONE)
+
                     println(response.message())
                     println(response.body())
                     println(response.code())
@@ -37,17 +42,17 @@ class DictionaryViewModel : ViewModel() {
                         println(body[0].toMap())
                         _dictionaryResponse.postValue(body)
                     }
-                    _loading.postValue(false)
+
                 }
                 println(response.message())
                 println(response.body())
                 println(response.code())
                 println(response.raw())// Handle other cases like errors, etc.
             } catch (e: Exception) {
-
+                _status.postValue(ApiStatus.ERROR)
                 println(e.printStackTrace())
                 // Handle network errors
-            }finally{_loading.postValue(false)}
+            }
 
 
         }

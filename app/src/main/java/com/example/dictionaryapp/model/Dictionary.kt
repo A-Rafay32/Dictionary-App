@@ -2,11 +2,11 @@ package com.example.dictionaryapp.model
 
 data class DictionaryModel(
     val word: String,
-    val phonetic: String,
-//    val phonetics: List<PhoneticModel>,
+    val phonetic: String?,
+
     val meanings: List<MeaningModel>
 ) {
-    fun toMap(): Map<String, Any> {
+    fun toMap(): Map<String, Any?> {
         return mapOf(
             "word" to word,
             "phonetic" to phonetic,
@@ -18,12 +18,10 @@ data class DictionaryModel(
 
 //data class PhoneticModel(
 //    val text: String,
-//    val audio: String
 //) {
 //    fun toMap(): Map<String, String> {
 //        return mapOf(
 //            "text" to text,
-//            "audio" to audio
 //        )
 //    }
 //}

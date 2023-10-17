@@ -1,5 +1,6 @@
 package com.example.dictionaryapp.view
 
+import ApiStatus
 import DictionaryViewModel
 import android.content.Intent
 import android.os.Bundle
@@ -34,12 +35,13 @@ class ResponseActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
     private lateinit var searchedWord: TextView
+    private lateinit var notFound: TextView
+    private lateinit var errorText: TextView
+
     private lateinit var phonetic: TextView
     private lateinit var definitionSize: TextView
 
-
     private var definitionList: ArrayList<String> = arrayListOf( "hello" ,"hi" , "how are you")
-
 
     fun initViews(){
         // All Views
@@ -47,6 +49,8 @@ class ResponseActivity : AppCompatActivity() {
          phonetic  = findViewById(R.id.id_phonetics)
          definitionSize  = findViewById(R.id.def_size)
         progressBar = findViewById(R.id.progressBar)
+        notFound = findViewById(R.id.Notfound)
+        errorText = findViewById(R.id.errorTextView)
 
         definitionRecyclerView = findViewById(R.id.definition_recyclerView)
         definitionRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -82,31 +86,53 @@ class ResponseActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(DictionaryViewModel::class.java)
 
 
-        viewModel.loading.observe(this) { isLoading ->
-            if (isLoading) {
+        viewModel.status.observe(this) { status ->
+            if (status == ApiStatus.LOADING) {
                 progressBar.visibility = View.VISIBLE
-            } else {
+//                notFound.visibility = View.GONE
+//                errorText.visibility = View.GONE
+
+            }else if(status == ApiStatus.DONE) {
+                progressBar.visibility = View.GONE
+//                notFound.visibility = View.GONE
+//                errorText.visibility = View.GONE
                 // Observe the LiveData and update the UI when data is available
                 viewModel.dictionaryResponse.observe(this) { response ->
                     if (response != null) {
                         progressBar.visibility = View.GONE
                         updateUI()
                         searchedWord.text = word
+                        if(response[0]?.phonetic == null){
+                            phonetic.text = ""
+                        }
                         phonetic.text = response[0]?.phonetic
+
+
+
                         definitionSize.text =
                             response[0]?.meanings?.get(0)?.definitions?.size.toString()
                         definitionList.clear()
 //                definitionList.addAll(response[0].meanings.)
                         println(definitionList)
+                        if(response[0]?.meanings?.get(0)?.synonyms?.size == 0){
+                            findViewById<TextView>(R.id.synonyms_heading).text = ""
+                        }
+                        if(response[0]?.meanings?.get(0)?.antonyms?.size == 0){
+                            findViewById<TextView>(R.id.antonyms_heading).text = ""
+                        }
                         synonymsRecyclerView.adapter = response[0]?.meanings?.get(0)
-                            ?.let { SynonymsAdapter(it?.synonyms?.subList(0,7) as List<String>) }
+                            ?.let { SynonymsAdapter(it?.synonyms as List<String>) }
                         antonymsRecyclerView.adapter = response[0]?.meanings?.get(0)
-                                ?.let { AntonymsAdapter(it?.antonyms?.subList(0,7) as List<String>) }
+                                ?.let { AntonymsAdapter(it?.antonyms as List<String>) }
 
                         definitionRecyclerView.adapter = response[0]?.meanings?.get(0)?.let {
                             DefinitionAdapter(it.definitions)
                         }
-                    } else { println("Empty Response")}
+                    } else if(status == ApiStatus.ERROR) {
+                        progressBar.visibility = View.GONE
+//                        notFound.visibility = View.VISIBLE
+//                        errorText.visibility = View.VISIBLE
+                        println("Empty Response")}
                 }
             }
         }
