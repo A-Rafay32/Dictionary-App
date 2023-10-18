@@ -41,7 +41,7 @@ class ResponseActivity : AppCompatActivity() {
     private lateinit var phonetic: TextView
     private lateinit var definitionSize: TextView
 
-    private var definitionList: ArrayList<String> = arrayListOf( "hello" ,"hi" , "how are you")
+    private var definitionList: ArrayList<String> = arrayListOf()
 
     fun initViews(){
         // All Views
@@ -89,13 +89,8 @@ class ResponseActivity : AppCompatActivity() {
         viewModel.status.observe(this) { status ->
             if (status == ApiStatus.LOADING) {
                 progressBar.visibility = View.VISIBLE
-//                notFound.visibility = View.GONE
-//                errorText.visibility = View.GONE
-
             }else if(status == ApiStatus.DONE) {
                 progressBar.visibility = View.GONE
-//                notFound.visibility = View.GONE
-//                errorText.visibility = View.GONE
                 // Observe the LiveData and update the UI when data is available
                 viewModel.dictionaryResponse.observe(this) { response ->
                     if (response != null) {
@@ -106,13 +101,9 @@ class ResponseActivity : AppCompatActivity() {
                             phonetic.text = ""
                         }
                         phonetic.text = response[0]?.phonetic
-
-
-
                         definitionSize.text =
                             response[0]?.meanings?.get(0)?.definitions?.size.toString()
                         definitionList.clear()
-//                definitionList.addAll(response[0].meanings.)
                         println(definitionList)
                         if(response[0]?.meanings?.get(0)?.synonyms?.size == 0){
                             findViewById<TextView>(R.id.synonyms_heading).text = ""
@@ -130,8 +121,6 @@ class ResponseActivity : AppCompatActivity() {
                         }
                     } else if(status == ApiStatus.ERROR) {
                         progressBar.visibility = View.GONE
-//                        notFound.visibility = View.VISIBLE
-//                        errorText.visibility = View.VISIBLE
                         println("Empty Response")}
                 }
             }
