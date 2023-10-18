@@ -12,8 +12,9 @@ import layout.RecentWordAdapter
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var newRecyclerView: RecyclerView
+    private lateinit var recentRecyclerView: RecyclerView
     private lateinit var recentWordList: ArrayList<String>
+    private lateinit var editText: EditText
     lateinit var recentWord : String
     var PREF_KEY : String = "RECENT_WORD_LIST"
 
@@ -24,56 +25,55 @@ class MainActivity : AppCompatActivity() {
         pref.edit()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-
-        val editText: EditText = findViewById(R.id.id_TextField)
-
+    fun initializeViews(){
+        editText = findViewById(R.id.id_TextField)
         val pref: SharedPreferences by lazy {
             getPreferences(MODE_PRIVATE)
         }
         val prefEdit: SharedPreferences.Editor by lazy {
             pref.edit()
         }
-        newRecyclerView = findViewById(R.id.id_recent_recyclerView)
-        newRecyclerView.layoutManager = LinearLayoutManager(this)
-        newRecyclerView.setHasFixedSize(true)
+        recentRecyclerView = findViewById(R.id.id_recent_recyclerView)
+        recentRecyclerView.layoutManager = LinearLayoutManager(this)
+        recentRecyclerView.setHasFixedSize(true)
 
-        // Load recentWordList from SharedPreferences
         recentWordList = ArrayList(pref.getStringSet(PREF_KEY, emptySet()))
-        newRecyclerView.adapter = RecentWordAdapter(recentWordList)
+        recentRecyclerView.adapter = RecentWordAdapter(recentWordList)
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        initializeViews()
+
 
         findViewById<ImageButton>(R.id.deleteButton).setOnClickListener{
             // Clear SharedPreferences or perform any other data update operation
             prefEdit.clear()
             prefEdit.commit()
-
             // Update recycleView
             recentWordList.clear()
-            newRecyclerView.adapter = RecentWordAdapter(recentWordList)
+            recentRecyclerView.adapter = RecentWordAdapter(recentWordList)
         }
 
         editText.setOnEditorActionListener { _, actionId, event ->
-//            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 recentWord = editText.text.toString()
                 recentWordList.add(recentWord)
 
                 prefEdit.putStringSet(PREF_KEY, recentWordList.toSet())
                 prefEdit.apply() // Asynchronously save changes
 
-                newRecyclerView.adapter?.notifyDataSetChanged()
+                recentRecyclerView.adapter?.notifyDataSetChanged()
 
+                //start response activity
                 val intent = Intent(this, ResponseActivity::class.java)
                 intent.putExtra("user_input", editText.text.toString())
                 startActivity(intent)
                 return@setOnEditorActionListener true
-//            }
-//            false
         }
     }
-
 }
 
 

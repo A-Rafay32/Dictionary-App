@@ -14,7 +14,6 @@ class RecentWordFragment  : Fragment(){
         return v
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
     }
 
 }

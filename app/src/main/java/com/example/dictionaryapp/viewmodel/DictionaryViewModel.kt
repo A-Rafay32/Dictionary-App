@@ -25,36 +25,21 @@ class DictionaryViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _status.postValue(ApiStatus.LOADING)
-
                 val response: Response<List<DictionaryModel>> = Api.retrofitServiceMoshi.getWordDictionary(word).execute()
 
                 if (response.isSuccessful) {
-
                     _status.postValue(ApiStatus.DONE)
-
-                    println(response.message())
-                    println(response.body())
-                    println(response.code())
-                    println(response.raw())
                     val body = response.body()
                     if (body != null) {
                         // Update the LiveData with the response data
                         println(body[0].toMap())
                         _dictionaryResponse.postValue(body)
                     }
-
                 }
-                println(response.message())
-                println(response.body())
-                println(response.code())
-                println(response.raw())// Handle other cases like errors, etc.
             } catch (e: Exception) {
                 _status.postValue(ApiStatus.ERROR)
                 println(e.printStackTrace())
-                // Handle network errors
             }
-
-
         }
     }
 }
